@@ -67,7 +67,7 @@ export default function SeverityDashboard({ incidents }) {
             <div className="section-label" style={{ marginTop: 0 }}>Severity Distribution</div>
             <ResponsiveContainer width="100%" height={180}>
               <BarChart data={counts}>
-                <CartesianGrid stroke="#1d2530" vertical={false} />
+                <CartesianGrid stroke="#1d2530" vertical={false} xAxisId={0} yAxisId={0} />
                 <XAxis
                   dataKey="severity"
                   tick={{ fill: "#6b7a8c", fontSize: 10, fontFamily: "IBM Plex Mono" }}
@@ -100,7 +100,7 @@ export default function SeverityDashboard({ incidents }) {
                     <stop offset="100%" stopColor="#5ef2a8" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid stroke="#1d2530" vertical={false} />
+                <CartesianGrid stroke="#1d2530" vertical={false} xAxisId={0} yAxisId={0} />
                 <XAxis
                   dataKey="time"
                   tick={{ fill: "#6b7a8c", fontSize: 10, fontFamily: "IBM Plex Mono" }}
