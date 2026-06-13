@@ -21,3 +21,6 @@ frontend/dist/
 # OS
 Thumbs.db
 .DS_Store
+
+# Internal project instructions
+Claude.md
