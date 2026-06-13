@@ -1,0 +1,31 @@
+{
+  "source": "demo",
+  "logs": [
+    {
+      "timestamp": "2026-06-12T03:14:22Z",
+      "source": "auth",
+      "event_type": "login_failure",
+      "user": "admin@company.com",
+      "source_ip": "185.220.101.47",
+      "geo": {"country": "RU", "city": "Moscow"},
+      "attempt_count": 47
+    },
+    {
+      "timestamp": "2026-06-12T03:14:55Z",
+      "source": "auth",
+      "event_type": "login_failure",
+      "user": "admin@company.com",
+      "source_ip": "185.220.101.47",
+      "geo": {"country": "RU", "city": "Moscow"},
+      "attempt_count": 52
+    },
+    {
+      "timestamp": "2026-06-12T03:15:10Z",
+      "source": "auth",
+      "event_type": "login_success",
+      "user": "admin@company.com",
+      "source_ip": "185.220.101.47",
+      "geo": {"country": "RU", "city": "Moscow"}
+    }
+  ]
+}

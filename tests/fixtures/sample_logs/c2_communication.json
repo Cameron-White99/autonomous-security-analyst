@@ -1,0 +1,35 @@
+{
+  "source": "demo",
+  "logs": [
+    {
+      "timestamp": "2026-06-12T03:15:01Z",
+      "source": "network",
+      "src_ip": "10.0.1.45",
+      "dst_ip": "185.220.101.47",
+      "dst_port": 4444,
+      "protocol": "TCP",
+      "bytes_out": 2048576,
+      "action": "allow"
+    },
+    {
+      "timestamp": "2026-06-12T03:16:30Z",
+      "source": "network",
+      "src_ip": "10.0.1.45",
+      "dst_ip": "185.220.101.47",
+      "dst_port": 4444,
+      "protocol": "TCP",
+      "bytes_out": 512,
+      "action": "allow"
+    },
+    {
+      "timestamp": "2026-06-12T03:15:45Z",
+      "source": "endpoint",
+      "hostname": "WORKSTATION-042",
+      "event_type": "process_create",
+      "parent_process": "explorer.exe",
+      "process_name": "powershell.exe",
+      "command_line": "powershell -enc JABjAGwAaQBlAG4AdA...",
+      "user": "jsmith"
+    }
+  ]
+}
