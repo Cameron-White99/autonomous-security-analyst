@@ -18,13 +18,19 @@ FIXTURES = Path(__file__).parent / "fixtures" / "sample_logs"
 @pytest.fixture(autouse=True)
 def demo_mode(monkeypatch):
     """Force demo agents with near-instant latency and a clean in-memory store."""
-    monkeypatch.setattr(
-        orchestrator, "get_settings",
-        lambda: Settings(anthropic_api_key=None, demo_mode=True, database_url=None, _env_file=None),
-    )
+    from app.config import get_settings as _cached
+    _cached.cache_clear()
+
+    _demo = Settings(anthropic_api_key=None, demo_mode=True, database_url=None)
+    _getter = lambda: _demo  # noqa: E731
+
+    monkeypatch.setattr(orchestrator, "get_settings", _getter)
+    monkeypatch.setattr("app.main.get_settings", _getter)
     monkeypatch.setattr("app.agents.demo.random.uniform", lambda a, b: 0.01)
     incidents_repo.reset_memory_store()
     findings_repo.reset_memory_store()
+    yield
+    _cached.cache_clear()
 
 
 @pytest.fixture

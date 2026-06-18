@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import re
 import time
 from collections.abc import Awaitable, Callable
 from datetime import datetime, timezone
@@ -24,6 +25,15 @@ CORRELATION_MODEL = "claude-sonnet-4-6"
 EmitFn = Callable[[dict], Awaitable[None]]
 
 _client: AsyncAnthropic | None = None
+
+
+def _parse_json(raw: str) -> dict:
+    """Parse JSON from a Claude response, stripping markdown code fences if present."""
+    raw = raw.strip()
+    match = re.search(r"```(?:json)?\s*([\s\S]*?)\s*```", raw)
+    if match:
+        raw = match.group(1)
+    return json.loads(raw)
 
 
 def get_client() -> AsyncAnthropic:
@@ -75,8 +85,8 @@ async def run_specialist_agent(
         )
         raw = response.content[0].text
         try:
-            findings = json.loads(raw)
-        except json.JSONDecodeError:
+            findings = _parse_json(raw)
+        except (json.JSONDecodeError, AttributeError):
             findings = {"raw": raw, "parse_error": True}
 
     elapsed_ms = int((time.perf_counter() - started) * 1000)
@@ -113,8 +123,8 @@ async def run_correlation_agent(specialist_results: list[dict], emit: EmitFn | N
         )
         raw = response.content[0].text
         try:
-            report = json.loads(raw)
-        except json.JSONDecodeError:
+            report = _parse_json(raw)
+        except (json.JSONDecodeError, AttributeError):
             report = {"raw": raw, "parse_error": True}
 
     elapsed_ms = int((time.perf_counter() - started) * 1000)
