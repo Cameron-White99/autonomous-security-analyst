@@ -34,35 +34,61 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── atmosphere: scanlines + grain + vignette ─────────────────── */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 999;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 2px,
-    rgba(0, 0, 0, 0.12) 3px
-  );
-  mix-blend-mode: multiply;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 998;
-  background:
-    radial-gradient(ellipse 120% 90% at 50% 0%, transparent 55%, rgba(0, 0, 0, 0.55) 100%),
-    radial-gradient(ellipse 60% 40% at 15% 8%, rgba(94, 242, 168, 0.05), transparent 70%);
-}
 
 #root {
   min-height: 100vh;
+}
+
+/* ── demo banner ──────────────────────────────────────────────── */
+.demo-banner {
+  background: rgba(255, 150, 54, 0.07);
+  border: 1px solid rgba(255, 150, 54, 0.35);
+  border-left: 3px solid var(--high);
+  padding: 11px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.demo-banner-icon {
+  color: var(--high);
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.demo-banner code {
+  font-family: var(--font-mono);
+  color: var(--phosphor);
+  background: rgba(94, 242, 168, 0.08);
+  padding: 1px 5px;
+  font-size: 11px;
+}
+
+/* ── button spinner ───────────────────────────────────────────── */
+.spinner-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--phosphor);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn.btn-loading {
+  border-color: var(--phosphor);
+  background: var(--phosphor-dim);
+  color: var(--phosphor);
 }
 
 /* ── shell ────────────────────────────────────────────────────── */

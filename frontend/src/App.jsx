@@ -12,6 +12,7 @@ export default function App() {
   const [incidents, setIncidents] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [detail, setDetail] = useState(null);
+  const [activeScenario, setActiveScenario] = useState(null);
 
   const { events, status, incidentId } = useAgentStream(jobId);
 
@@ -27,10 +28,14 @@ export default function App() {
     refreshIncidents();
   }, [refreshIncidents]);
 
-  // When an analysis completes, refresh the feed and open the new incident
+  // When analysis completes, refresh the feed, open the new incident, clear loader
   useEffect(() => {
     if (status === "complete" && incidentId) {
       refreshIncidents().then(() => setSelectedId(incidentId));
+      setActiveScenario(null);
+    }
+    if (status === "error") {
+      setActiveScenario(null);
     }
   }, [status, incidentId, refreshIncidents]);
 
@@ -40,6 +45,7 @@ export default function App() {
   }, [selectedId]);
 
   async function runScenario(key) {
+    setActiveScenario(key);
     const { batch } = SCENARIOS[key];
     const { job_id } = await ingestBatch(batch);
     setJobId(job_id);
@@ -49,6 +55,16 @@ export default function App() {
 
   return (
     <div className="shell">
+      <div className="demo-banner">
+        <span className="demo-banner-icon">⚠</span>
+        <span>
+          DEMO MODE — No AI agents are currently attached. Analysis uses
+          pre-generated responses to simulate the parallel multi-agent pipeline.
+          To enable real Claude agents, configure{" "}
+          <code>ANTHROPIC_API_KEY</code> on the backend.
+        </span>
+      </div>
+
       <header className="topbar">
         <h1>
           ASA<span>_</span>
@@ -72,11 +88,18 @@ export default function App() {
               {Object.entries(SCENARIOS).map(([key, { label }]) => (
                 <button
                   key={key}
-                  className="btn"
+                  className={`btn${activeScenario === key ? " btn-loading" : ""}`}
                   disabled={busy}
                   onClick={() => runScenario(key)}
                 >
-                  {label} <span className="arrow">→</span>
+                  <span>{label}</span>
+                  <span className="arrow">
+                    {activeScenario === key ? (
+                      <span className="spinner-icon" />
+                    ) : (
+                      "→"
+                    )}
+                  </span>
                 </button>
               ))}
             </div>
