@@ -18,7 +18,7 @@ services:
   api:
     build: .
     environment:
-      DATABASE_URL: postgresql+asyncpg://asa:asa@db:5432/asa
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://asa:asa@db:5432/asa}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DEMO_MODE: ${DEMO_MODE:-false}
       ENVIRONMENT: development
