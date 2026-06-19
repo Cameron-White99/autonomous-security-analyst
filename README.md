@@ -1,6 +1,6 @@
 # Autonomous Security Analyst
 
-**Live demo:** https://autonomous-security-analyst-8tzw9a6p8.vercel.app/
+**Live demo:** https://autonomous-security-analyst-18u5e8h8y.vercel.app/
 
 An AI-powered Security Operations Centre (SOC) assistant that ingests security logs,
 analyses them with **parallel specialist Claude agents**, correlates events across
